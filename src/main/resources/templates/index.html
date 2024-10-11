@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>PAQP Spotter</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+</head>
+<body style="background-color:black;">
+<div>
+    <input type="text" id="frequency" placeholder="Frequency">
+    <button onclick="getFrequency()">Get Frequency</button>
+</div>
+<div>
+    <input type="text" id="comment" placeholder="Comment">
+</div>
+<div>
+    <input type="text" id="station" placeholder="Station">
+</div>
+<div>
+    <select name="Counties" id="county">
+        <option value="choose">Choose a County</option>
+        <option value="ADA">ADA</option>
+        <option value = "ALL">ALL</option>
+        <option value="ARM">ARM</option>
+        <option value="BEA">BEA</option>
+        <option value="BED">BED</option>
+        <option value="BER">BER</option>
+        <option value="BLA">BLA</option>
+        <option value="BRA">BRA</option>
+        <option value="BUX">BUX</option>
+        <option value="BUT">BUT</option>
+        <option value="CMB">CMB</option>
+        <option value="CRN">CRN</option>
+        <option value="CAR">CAR</option>
+        <option value="CEN">CEN</option>
+        <option value="CHE">CHE</option>
+        <option value="CLA">CLA</option>
+        <option value="CLE">CLE</option>
+        <option value="CLI">CLI</option>
+        <option value="COL">COL</option>
+        <option value="CRA">CRA</option>
+        <option value="CUM">CUM</option>
+        <option value="DAU">DAU</option>
+        <option value="DCO">DCO</option>
+        <option value="ELK">ELK</option>
+        <option value="ERI">ERI</option>
+        <option value="FAY">FAY</option>
+        <option value="FUL">FUL</option>
+        <option value="FOR">FOR</option>
+        <option value="FRA">FRA</option>
+        <option value="GRE">GRE</option>
+        <option value="HUN">HUN</option>
+        <option value="IMM">INN</option>
+        <option value="JEF">JEF</option>
+        <option value="JUN">JUN</option>
+        <option value="LAC">LAC</option>
+        <option value="LAN">LAN</option>
+        <option value="LAW">LAW</option>
+        <option value="LEB">LEB</option>
+        <option value="LEH">LEH</option>
+        <option value="LUZ">LUZ</option>
+        <option value="LYC">LYC</option>
+        <option value="MCK">MCK</option>
+        <option value="MER">MER</option>
+        <option value="MIF">MIF</option>
+        <option value="MOE">MOE</option>
+        <option value="MGY">MGY</option>
+        <option value="MTR">MTR</option>
+        <option value="NHA">NHA</option>
+        <option value="NUM">NUM</option>
+        <option value="PER">PER</option>
+        <option value="PHI">PHI</option>
+        <option value="PIK">PIK</option>
+        <option value="POT">POT</option>
+        <option value="SCH">SCH</option>
+        <option value="SNY">SNY</option>
+        <option value="SOM">SOM</option>
+        <option value="SUL">SUL</option>
+        <option value="SUS">SUS</option>
+        <option value="TIO">TIO</option>
+        <option value="UNI">UNI</option>
+        <option value="VEN">VEN</option>
+        <option value="WAR">WAR</option>
+        <option value="WAS">WAS</option>
+        <option value="WAY">WAY</option>
+        <option value="WES">WES</option>
+        <option value="WYO">WYO</option>
+        <option value="YOR">YOR</option>
+    </select>
+</div>
+<div>
+    <input type="text" id="poster" placeholder="Who is posting?">
+</div>
+<div>
+    <button onclick="postData()">POST</button>
+</div>
+<script>
+        function getFrequency() {
+            fetch('/getFrequency')
+                .then(response => response.text())
+                .then(data => document.getElementById('frequency').value = data);
+        }
+
+        function postData() {
+            const frequency = document.getElementById('frequency').value;
+            const comment = document.getElementById('comment').value;
+            const station = document.getElementById('station').value;
+            const county = document.getElementById('county').value;
+            const poster = document.getElementById('poster').value;
+
+            fetch('/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `frequency=${frequency}&comment=${comment}&station=${station}&county=${county}&poster=${poster}`
+            }).then(response => response.text())
+              .then(data => console.log(data));
+            document.getElementById('frequency').value = ""
+            document.getElementById('comment').value = ""
+        }
+    </script>
+</body>
+</html>
